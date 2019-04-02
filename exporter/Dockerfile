@@ -8,3 +8,4 @@ RUN go build
 FROM alpine:3.9
 COPY --from=builder /build/exporter /exporter
 CMD /exporter
+
