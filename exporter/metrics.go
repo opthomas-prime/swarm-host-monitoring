@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/pkg/errors"
 	"net/http"
+	"strconv"
 )
 
 type nodeInfo struct {
@@ -91,4 +93,17 @@ func fetchMetrics(addr string) (nodeMetrics, error) {
 	metrics.mem = mem
 
 	return metrics, nil
+}
+
+func toPromFormat(metrics nodeMetrics) string {
+	prefix := "swarm_host_monitoring_"
+	instance := metrics.info.Name
+	value := ""
+	value += prefix + "load1{instance=\"" + instance + "\"} " + fmt.Sprintf("%f", metrics.load.Load1) + "\n"
+	value += prefix + "load5{instance=\"" + instance + "\"} " + fmt.Sprintf("%f", metrics.load.Load5) + "\n"
+	value += prefix + "load15{instance=\"" + instance + "\"} " + fmt.Sprintf("%f", metrics.load.Load15) + "\n"
+	value += prefix + "mem_total{instance=\"" + instance + "\"} " + strconv.FormatInt(metrics.mem.Total, 10) + "\n"
+	value += prefix + "mem_available{instance=\"" + instance + "\"} " + strconv.FormatInt(metrics.mem.Available, 10) + "\n"
+	value += prefix + "mem_used{instance=\"" + instance + "\"} " + strconv.FormatInt(metrics.mem.Used, 10) + "\n"
+	return value
 }
