@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  probe:
+    image: opthomasprime/swarm-host-monitoring-probe:latest
+    networks:
+      - monitoring
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: global
+
+  exporter:
+    image: opthomasprime/swarm-host-monitoring-exporter:latest
+    networks:
+      - monitoring
+    environment:
+      PROBE_DNS_NAME: tasks.probe.monitoring_monitoring
+
+networks:
+  monitoring:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
