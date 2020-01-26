@@ -1,4 +1,4 @@
-module github.com/opthomas-prime/swarm-host-monitoring/probe
+module github.com/tmsmr/swarm-host-monitoring/probe
 
 go 1.12
 

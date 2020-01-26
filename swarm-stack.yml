@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   probe:
-    image: opthomasprime/swarm-host-monitoring-probe:latest
+    image: tmsmr/swarm-host-monitoring-probe:latest
     networks:
       - monitoring
     volumes:
@@ -10,7 +10,7 @@ services:
       mode: global
 
   exporter:
-    image: opthomasprime/swarm-host-monitoring-exporter:latest
+    image: tmsmr/swarm-host-monitoring-exporter:latest
     networks:
       - monitoring
     environment:
